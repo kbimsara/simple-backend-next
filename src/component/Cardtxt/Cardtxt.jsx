@@ -9,8 +9,23 @@ function Cardtxt({ id, name, email }) {
   };
 
   // function for delete
-  const handleDelete = () => {
-    alert(`Delete clicked for: ${id}`);
+  const handleDelete = async (id) => {
+    if (confirm("Are you sure you want to delete this user?")) {
+      try {
+        const res = await fetch(`/api/users/${id}`, {
+          method: "DELETE",
+        });
+        if (res.ok) {
+          alert("User deleted successfully");
+          fetchUsers(); // refresh the list
+        } else {
+          const err = await res.json();
+          alert("Error deleting user: " + err.error);
+        }
+      } catch (error) {
+        console.error("Delete failed:", error);
+      }
+    }
   };
 
   return (
@@ -27,7 +42,7 @@ function Cardtxt({ id, name, email }) {
           <FaEdit />
         </button>
         <button
-          onClick={handleDelete}
+          onClick={() => handleDelete(id)}
           className="bg-red-500 text-white font-bold p-2 border rounded-full"
         >
           <RiDeleteBin5Fill />

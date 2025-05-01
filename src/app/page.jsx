@@ -1,15 +1,51 @@
 "use client";
-import { useState, FormEvent } from "react";
+import { useState,useEffect } from "react";
 import Cardtxt from "@/component/Cardtxt/Cardtxt";
+import { data } from "autoprefixer";
 
 export default function Home() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [users, setUsers] = useState([]);
 
-  // save data
-  const handleSubmit = (e) => {
+  // Fetch users on mount
+  useEffect(() => {
+    fetchUsers();
+  }, [users]);
+  
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch("/api/users");
+      const data = await res.json();
+      setUsers(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+  // save to database
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Data saved successfully!\nName: ${name}\nEmail: ${email}`);
+    try {
+      const response = await fetch("/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email }),
+      });
+
+      if (response.ok) {
+        alert("Data saved successfully!");
+        setName("");
+        setEmail("");
+      } else {
+        const err = await response.json();
+        alert("Error saving data: " + err.error);
+      }
+    } catch (error) {
+      console.error("Request failed:", error);
+      alert("Failed to send request");
+    }
   };
 
   return (
@@ -49,9 +85,12 @@ export default function Home() {
       </div>
       <h1 className="text-3xl font-bold">View</h1>
       <div className="flex flex-col items-center justify-center w-full max-w-4xl px-4 py-6">
-        <Cardtxt id={1} name={"Name"} email={"email"} />
+        {/* <Cardtxt id={1} name={"Name"} email={"email"} />
         <Cardtxt id={2} name={"Name"} email={"email"} />
-        <Cardtxt id={3} name={"Name"} email={"email"} />
+        <Cardtxt id={3} name={"Name"} email={"email"} /> */}
+        {users.map((user) => (
+          <Cardtxt id={user._id} name={user.name} email={user.email} />
+        ))}
       </div>
     </div>
   );
