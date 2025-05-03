@@ -105,7 +105,7 @@ export default function Home() {
     setName(user.name);
     setEmail(user.email);
     // console.log(users.find((user) => user._id === id));
-    alert(`Edit clicked for: ${id}`);
+    // alert(`Edit clicked for: ${id}`);
   };
 
   return (
