@@ -50,7 +50,7 @@ export default function Home() {
         console.error("Request failed:", error);
         alert("Failed to send request");
       }
-    }else {
+    } else {
       try {
         const response = await fetch(`/api/users/${id}`, {
           method: "PUT",
@@ -149,16 +149,20 @@ export default function Home() {
       {/* View List */}
       <h1 className="text-3xl font-bold">View</h1>
       <div className="flex flex-col items-center justify-center w-full max-w-4xl px-4 py-6">
-        {users.map((user) => (
-          <Cardtxt
-            key={user._id}
-            id={user._id}
-            name={user.name}
-            email={user.email}
-            onDelete={handleDelete}
-            onEdit={handleEdit}
-          />
-        ))}
+        {users.length === 0 ? (
+          <p className="text-gray-500">No users found</p>
+        ) : (
+          users.map((user) => (
+            <Cardtxt
+              key={user._id}
+              id={user._id}
+              name={user.name}
+              email={user.email}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+            />
+          ))
+        )}
       </div>
     </div>
   );
