@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Project Name: User Management API
 
-First, run the development server:
+This is a simple User Management API built using Next.js 13/14, MongoDB, and Mongoose. It allows you to create, read, update, and delete user data. The API handles basic CRUD operations.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Create a user**
+- **Read user details**
+- **Update user details**
+- **Delete a user**
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Clone the repository**:
 
-## Learn More
+   ```bash
+   git clone https://github.com/kbimsara/simple-backend-next.git
+   cd simple-backend-next
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install dependencies**:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   Make sure you have [Node.js](https://nodejs.org/) and [MongoDB](https://www.mongodb.com/) installed.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+3. **Set up environment variables**:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   Create a `.env` file in the root of your project and add the following:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```bash
+   MONGODB_URI=mongodb://localhost:27017/crud
+   ```
+
+4. **Run the development server**:
+
+   ```bash
+   npm run dev
+   ```
+
+   Your server will be running at `http://localhost:3000`.
+
+## API Routes
+
+### `GET /api/users`
+
+- **Description**: Fetch all users.
+- **Response**: Returns a list of users in JSON format.
+
+### `GET /api/users/:id`
+
+- **Description**: Fetch a user by their `id`.
+- **Response**: Returns the user data in JSON format.
+
+### `POST /api/users`
+
+- **Description**: Create a new user.
+- **Body**: 
+  ```json
+  {
+    "name": "John Doe",
+    "email": "johndoe@example.com"
+  }
+  ```
+
+- **Response**: Returns the created user data in JSON format.
+
+### `PUT /api/users/:id`
+
+- **Description**: Update user details by `id`.
+- **Body**:
+  ```json
+  {
+    "name": "Updated Name",
+    "email": "updatedemail@example.com"
+  }
+  ```
+
+- **Response**: Returns the updated user data in JSON format.
+
+### `DELETE /api/users/:id`
+
+- **Description**: Delete a user by `id`.
+- **Response**: Returns a message confirming the deletion.
+
